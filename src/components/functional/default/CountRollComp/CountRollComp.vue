@@ -25,7 +25,7 @@
       </span>
       <!--数字-->
       <count-to :start-val="component.compConfigData.count.startValue"
-                :end-val="runCustomFilter(component.compConfigData.ds_resultObj)[0].value"
+                :end-val="component.compConfigData.ds_resultObj[0].value"
                 :duration="component.compConfigData.count.duration"
                 :decimals="component.compConfigData.count.decimals"
                 :autoplay="component.compConfigData.count.autoPlay"
@@ -143,6 +143,9 @@
           this.component.compConfigData.ds_resultObj = result.data;
         })
       },
+      runCustomFilter(val){
+        return val
+      }
     },
     computed: {}
   };

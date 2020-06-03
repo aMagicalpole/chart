@@ -177,7 +177,7 @@
       },
 
       onLayoutItemActivated (layoutItem) {
-        // console.log('onLayoutItemActivated');
+        console.log('onLayoutItemActivated');
 
         this.registerKeyDownAndUp(); // 重新注册键盘监听
 
@@ -466,7 +466,6 @@
                     compConfigData: ''
                   };
                   const componentsContext = require.context('../../../../components/', true, /\.vue$/);
-    console.log(componentsContext);
     
                   componentsContext.keys().forEach(fileName => {
                     const componentConfig = componentsContext(fileName);
