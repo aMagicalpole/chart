@@ -290,7 +290,11 @@ const mutations = {
     state.currentSelectLayoutItemId = layoutItemId;
   },
 
-  updateLayoutItem (state, field) {
+  updateLayoutItem(state, field) {
+    console.log(field,'tableConfig');
+    // console.log(state.pageMetadata.layout.layoutItems,state.pageMetadata.layout.layoutItems.find(o => o.id == state.currentSelectLayoutItemId));
+    console.log(state.pageMetadata.layout.layoutItems.find(o => o.id == state.currentSelectLayoutItemId));
+    
     updateField(state.pageMetadata.layout.layoutItems.find(o=>o.id==state.currentSelectLayoutItemId), field);
   },
 

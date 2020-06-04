@@ -1,6 +1,6 @@
 <template>
-  <div class="">
-    <Table ref="table" :size="'small'" :columns="columnsData" :data="tableData" :row-class-name="ttt"></Table>
+  <div class="" :style="`--stripeColor:${strip}`">
+    <Table ref="table" stripe  :size="'small'" :columns="columnsData" :data="tableData" :row-class-name="ttt"></Table>
   </div>
 </template>
 
@@ -12,10 +12,8 @@
     mixins: [FuncCompMixin],
     attr: {
       configDataTemp: {
-        headerStyle: {
-          backgroundColor: '',
-          color: ''
-        },
+        headerBackgroundColor: '',
+        headerColor: '',
         tableConfig: {
           columns: [
             {
@@ -33,12 +31,11 @@
             }
           ]
         },
-        customJsCode: ''
+        customJsCode: '',
       }
     },
     data() {
       return {
-
         columnsData: [
 
         ],
@@ -67,14 +64,15 @@
             address: 'Ottawa No. 2 Lake Park',
             date: '2016-10-04'
           }
-        ]
+        ],
       }
     },
+    created(){ },
     mounted() {
       let _this = this;
-
-      this.setHeaderStyle();
-
+      this.setHeaderStyle()
+      console.log(this.component);
+  
       let newTableConfig = Object.assign({}, this.component.compConfigData.tableConfig);
 
       newTableConfig.columns.map(data=>{
@@ -92,10 +90,6 @@
 
       });
 
-      //this.columnsData = newTableConfig.columns.slice(0);
-
-      //console.log(this.$refs.table.$refs.header);
-
       eval(this.component.compConfigData.customJsCode)
 
     },
@@ -105,18 +99,29 @@
       },
 
       setHeaderStyle () {
+        console.log(this.component.compConfigData.headerBackgroundColor);
+        
         $(this.$refs.table.$refs.header).find('th').css({
-          'background-color': this.component.compConfigData.headerStyle.backgroundColor,
-          'color': this.component.compConfigData.headerStyle.color
+          'background-color': this.component.compConfigData.headerBackgroundColor,
+          'color': this.component.compConfigData.headerColor
         })
-      }
+    
+      },
     },
-    computed: {},
+    computed: {
+     strip(){
+       return this.component.compConfigData.headerBackgroundColor
+     }
+    },
     watch: {
-      'component.compConfigData.headerStyle': {
+      'component.compConfigData.headerBackgroundColor': {
         handler: 'setHeaderStyle',
         deep: true
-      }
+      },
+      'component.compConfigData.headerColor': {
+        handler: 'setHeaderStyle',
+        deep: true
+      },
     }
   }
 </script>
@@ -131,4 +136,7 @@
     font-weight: bold;
     border: none;
   }*/
+ >>> .ivu-table-stripe .ivu-table-body tr:nth-child(2n) td, .ivu-table-stripe .ivu-table-fixed-body tr:nth-child(2n) td{
+   background-color: var(--stripeColor);
+  }
 </style>

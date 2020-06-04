@@ -532,6 +532,8 @@
 
       'rightSidebarFuncCompConfigFormName': {
         handler: function (val) {
+          console.log(val,'val');
+          
           if (val) {
             val = val.replace('Form', '');
             this.currentCompVersion = this.$PnUtil.getCompVersion(val)

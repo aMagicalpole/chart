@@ -82,6 +82,7 @@
   // 右键菜单组件
   import contentmenu from 'v-contextmenu'
   import '../../../../assets/css/contextmenu.css'
+  import '../../../../assets/css/common.css'
   Vue.use(contentmenu);
 
   // 引入vue-draggable-resizable
@@ -176,6 +177,7 @@
         }
       },
 
+      // 画布元素被选中
       onLayoutItemActivated (layoutItem) {
         console.log('onLayoutItemActivated');
 
@@ -203,8 +205,9 @@
         this.$store.commit('designer/setCurrentSelectLayoutItemId', this.tmpCurrentSelectLayoutItemId)
       },
 
+      // 画布元素不被选中
       onLayoutItemDeactivated () {
-        // console.log('onLayoutItemDeactivated');
+        console.log('onLayoutItemDeactivated');
         this.tmpCurrentSelectLayoutItemId = '';
 
         // 此处关闭右键菜单要设置一段延时，否则在布局块失活时，同步关闭菜单的话，会出现菜单点击无效的情况
@@ -212,14 +215,17 @@
           this.$refs.contextmenu.hide()
         }, 150)
       },
-
+      // 画布元素拖拽移动触发
       onLayoutItemDrag (left, top) {
-
+        // console.log(left,top,'left top move');
+        
         this.toggleLayoutItemXyLabel('block', left, top);
         // this.toggleLayoutItemSubline('block');
       },
 
+      //  画布元素拖拽松开触发
       onLayoutItemDragStop (left, top) {
+        // console.log(left,top,'left top stop');
 
         this.toggleLayoutItemXyLabel('none', left, top);
         // this.toggleLayoutItemSubline('none');
@@ -233,12 +239,15 @@
 
       },
 
+      // 画布元素缩放拉伸触发
       onLayoutItemResize (left, top, width, height) {
-
+        // console.log(left, top, width, height,'');
+        
       },
 
+       // 画布元素缩放拉伸结束触发
       onLayoutItemResizeStop (left, top, width, height) {
-        // console.log('onLayoutItemResizeStop');
+        console.log('onLayoutItemResizeStop');
         this.$store.commit('designer/setLayoutItemWidthAndHeight',
           {id: this.tmpCurrentSelectLayoutItemId, width: width, height: height});
       },
@@ -253,6 +262,7 @@
        * 切换显示布局块辅助线
        */
       toggleLayoutItemSubline (display) {
+        // console.log(toggleLayoutItemSubline);
         $("#"+this.tmpCurrentSelectLayoutItemId).find('.item_subline_h').css('display', display);
         $("#"+this.tmpCurrentSelectLayoutItemId).find('.item_subline_v').css('display', display);
       },
@@ -261,6 +271,7 @@
        * 注销画布框选监听
        */
       disableSelectable () {
+        console.log('disableSelectable');
         this.$AbsoluteLayout.selectable("disable");
         this.keepSelectable = false;
       },
@@ -269,6 +280,7 @@
        * 注册画布失活监听
        */
       registerCanvasNonactivated () {
+        console.log('registerCanvasNonactivated');
         let func = () => {
           $(document).unbind('keydown');
           $(document).unbind('keyup');
@@ -284,7 +296,7 @@
        * direction 方向
        */
       moveLayoutItem (direction) {
-
+        console.log('direction');
         if (direction == 'left') {
           if(this.$store.state.designer.currentSelectLayoutItemId) {
             this.$store.commit('designer/setLayoutItemLeftAndTopOffset', {
@@ -329,17 +341,20 @@
        */
       registerKeyDownAndUp () {
         let _this = this;
-
+        // console.log('注册监听键盘按键');
+  
         $(document).unbind('keydown');
         $(document).unbind('keyup');
 
         this.registerKeyCtrlAndS();
 
+          // console.log(_this.layout);
+          // TODO：绑定失败了
         $(document).bind("keydown", function(e) {
 
           let keyCode = event.keyCode || event.which || event.charCode;
           let ctrlKey = event.ctrlKey || event.metaKey;
-
+          
           // ctrl + a 全选组合键
           if(ctrlKey && keyCode == 65) {
             event.preventDefault();
@@ -394,7 +409,8 @@
        */
       registerCanvasDrop () {
         let _this = this;
-
+          console.log('注册画布放置监听');
+  
         $("#AbsoluteLayout").droppable({
           accept: ".comp-card",
           drop: (e, ui) => {
@@ -441,7 +457,8 @@
        */
       registerLayoutItemDrop() {
         let _this = this;
-
+        console.log('注册布局块放置监听');
+        
         // 必须设置延迟，否则将无法正常给动态新增的布局块添加拖拽等事件
         setTimeout(() => {
 
@@ -451,7 +468,7 @@
             // activeClass: "layout-item-drop-active",
             // hoverClass: "layout-item-drop-hover",
             drop: (e, ui) => {
-              console.log(e,ui);
+              // console.log(e,ui);
               
               let layoutItemId = e.target.attributes['data-id'].nodeValue;
               let compName = ui.draggable[0].attributes['data-component'].nodeValue;
@@ -509,7 +526,7 @@
        * 画布点击事件监听
        */
       layoutCanvasClick () {
-        // console.log('layoutCanvasClick');
+        // console.log('画布点击事件监听');
 
         // 设置画布激活状态为true
         this.$store.commit('designer/setCanvasEnabled', true);
@@ -533,7 +550,8 @@
        * @param event
        */
       layoutItemClick(layoutItem, event) {
-
+        // console.log('布局块点击事件监听');
+        
         // 设置画布激活状态为false
         this.$store.commit('designer/setCanvasEnabled', false);
 
@@ -541,7 +559,10 @@
 
       },
 
+      // 动态添加选中类名
       buildLayoutClassObj (layout) {
+        // console.log(layout,'layout');
+        
         let clazz = '';
         if(layout.layoutConfigData.showGrid) {
           clazz += layout.layoutConfigData.canvasGridClass + ' '
@@ -549,8 +570,10 @@
         return clazz
       },
 
+      // 动态添加选中类名
       buildLayoutItemClassObj (layoutItem) {
-
+        // console.log(layoutItem,'layoutItem');
+        
         if (this.$store.state.designer.currentSelectLayoutItemId == layoutItem.id &&
           this.$PnUtil.getContrastYIQ(this.layout.layoutConfigData.backgroundColor.substring(1,7)) == 'black') {
           return 'activeBlack'
@@ -572,6 +595,8 @@
       },
 
       buildGroupItemClassObj (groupItem) {
+        // console.log(groupItem,'groupItem');
+        
         if (this.$store.state.designer.currentSelectGroupItemId == groupItem.id) {
           return 'active'
         }

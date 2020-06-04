@@ -12,7 +12,13 @@
       <FormItem label="">
         <Button size="small" type="primary" @click="customJsCodeModalVisible = !customJsCodeModalVisible">自定义代码</Button>
       </FormItem>
-
+      <!-- <FormItem label="显示斑马纹">
+              <i-switch v-model="stripe">
+                <span slot="open"></span>
+                <span slot="close"></span>
+              </i-switch>
+      </FormItem> -->
+    
 
     </Form>
 
@@ -34,6 +40,8 @@
 </template>
 
 <script>
+  import FuncCompFormMixin from '@/mixin/FuncCompFormMixin'
+
   import { createHelpers } from 'vuex-map-fields';
 
   const { mapFields } = createHelpers({
@@ -43,19 +51,18 @@
 
   export default {
     name: 'ITableCompForm',
+    mixins: [FuncCompFormMixin],
     data() {
       return {
         customJsCodeModalVisible: false
       }
     },
-    mounted() {
-
-    },
+    mounted() { },
     methods: {},
     computed: {
       ...mapFields({
-        headerBackgroundColor: 'component.compConfigData.headerStyle.backgroundColor',
-        headerColor: 'component.compConfigData.headerStyle.color',
+        headerBackgroundColor: 'component.compConfigData.headerBackgroundColor',
+        headerColor: 'component.compConfigData.headerColor',
         customJsCode: 'component.compConfigData.customJsCode',
       })
     }

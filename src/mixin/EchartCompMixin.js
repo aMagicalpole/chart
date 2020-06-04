@@ -147,7 +147,9 @@ const EchartCompMixin = {
     component: function () {
       if(this.$store.state.release.pageMetadata) {
         return this.$store.getters['release/getLayoutItemById'](this.location).component
-      }else {
+      } else {
+        console.log(this.$store.getters['designer/getLayoutItemById'](this.location).component);
+        
         return this.$store.getters['designer/getLayoutItemById'](this.location).component
       }
     }
