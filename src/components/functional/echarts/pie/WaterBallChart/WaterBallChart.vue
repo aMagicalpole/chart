@@ -42,30 +42,30 @@
             'label': '南宁',
             'value': 10
           },
-          {
-            'label': '柳州',
-            'value': 52
-          },
-          {
-            'label': '桂林',
-            'value': 200
-          },
-          {
-            'label': '崇左',
-            'value': 334
-          },
-          {
-            'label': '北海',
-            'value': 390
-          },
-          {
-            'label': '防城港',
-            'value': 330
-          },
-          {
-            'label': '玉林',
-            'value': 220
-          }
+          // {
+          //   'label': '柳州',
+          //   'value': 52
+          // },
+          // {
+          //   'label': '桂林',
+          //   'value': 200
+          // },
+          // {
+          //   'label': '崇左',
+          //   'value': 334
+          // },
+          // {
+          //   'label': '北海',
+          //   'value': 390
+          // },
+          // {
+          //   'label': '防城港',
+          //   'value': 330
+          // },
+          // {
+          //   'label': '玉林',
+          //   'value': 220
+          // }
         ],
       }), PnDesigner.buildFuncCompGlobalField())
     },
@@ -102,7 +102,8 @@
             left: 'center',
             bottom: 10
           }],
-          series: [{
+          series: [
+            {
             type: 'liquidFill',
             radius: '90%',
             center: ['50%', '50%'],
@@ -110,7 +111,7 @@
             backgroundStyle: {
               borderWidth: 5,
               borderColor: '#1daaeb',
-              color: '#fff'
+              color: '#f60',
             },
             outline: {
               borderDistance: 0,
