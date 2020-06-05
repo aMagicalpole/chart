@@ -134,7 +134,7 @@
             show: this.component.compConfigData.chartOption.title.show,
             text: this.component.compConfigData.chartOption.title.text,
           },
-          color: [this.component.compConfigData.chartOption.color],
+          // color: [this.component.compConfigData.chartOption.color],
           tooltip: {
             trigger: 'axis',
             axisPointer: {            // 坐标轴指示器，坐标轴触发有效
