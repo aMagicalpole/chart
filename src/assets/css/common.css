@@ -1,4 +1,5 @@
 html{
 	 /* --stripeColor:#f8f8f9; */
 	 --stripeColor:transparent;
+	 --headerBackgroundColor:transparent;
 }
