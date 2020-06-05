@@ -1,5 +1,10 @@
 html{
 	 /* --stripeColor:#f8f8f9; */
+	 /* 表格默认样式 */
 	 --stripeColor:transparent;
 	 --headerBackgroundColor:transparent;
+	 --headerColor:#000;
+	 --bodyBackgroundColor:transparent;
+	 --bodyColor:#000;
+	 --bodyHoverBackground:transparent;
 }

@@ -1,6 +1,7 @@
 <template>
   <div class>
     <Tabs size="small">
+      <!-- 基础配置 -->
       <TabPane label="基础配置" :style="{paddingTop: '10px'}">
         <Form :label-width="105">
           <FormItem label="表头背景色">
@@ -9,7 +10,25 @@
           <FormItem label="表头字体颜色">
             <ColorPicker size="small" v-model="headerColor" alpha recommend />
           </FormItem>
-          <FormItem label>
+            <FormItem label="表格背景色">
+            <ColorPicker size="small" v-model="bodyBackgroundColor" alpha recommend />
+          </FormItem>
+          <FormItem label="表格字体颜色">
+            <ColorPicker size="small" v-model="bodyColor" alpha recommend />
+          </FormItem>
+          <!-- <FormItem label="显示斑马纹">
+              <i-switch v-model="stripe">
+                <span slot="open"></span>
+                <span slot="close"></span>
+              </i-switch>
+          </FormItem>-->
+          <FormItem label="斑马线背景色">
+            <ColorPicker size="small" v-model="strip" alpha recommend />
+          </FormItem>
+          <FormItem label="鼠标放上背景色">
+            <ColorPicker size="small" v-model="stripeHoverBackground" alpha recommend />
+          </FormItem>
+           <FormItem label>
             <Button
               size="small"
               type="primary"
@@ -22,15 +41,6 @@
               type="primary"
               @click="customTableColumnVisible = !customTableColumnVisible"
             >自定义表头</Button>
-          </FormItem>
-          <!-- <FormItem label="显示斑马纹">
-              <i-switch v-model="stripe">
-                <span slot="open"></span>
-                <span slot="close"></span>
-              </i-switch>
-          </FormItem>-->
-          <FormItem label="表头字体颜色">
-            <ColorPicker size="small" v-model="strip" alpha recommend />
           </FormItem>
         </Form>
 
@@ -48,6 +58,7 @@
             <Button type="default" @click="customJsCodeModalVisible = false">关闭</Button>
           </div>
         </Modal>
+
         <!-- 表头编辑 -->
         <Modal
           v-model="customTableColumnVisible"
@@ -63,7 +74,10 @@
             <Button type="default" @click="customTableColumnVisible = false">关闭</Button>
           </div>
         </Modal>
+
       </TabPane>
+
+      <!-- 数据源 -->
       <TabPane label="数据源" :style="{paddingTop: '10px'}">
         <DatasourceState targetComp="ITableComp"></DatasourceState>
       </TabPane>
@@ -92,13 +106,13 @@ export default {
     };
   },
   mounted() {
-    console.log(this.columns);
     this.tableColumnData = JSON.stringify(this.columns, null, 2);
   },
   methods: {
+    // 更新表头配置数据
     updateResultObj() {
         this.$store.commit('designer/updateLayoutItem', {
-          path: 'component.compConfigData.tableConfig.columns',
+          path: 'component.compConfigData.columns',
           value: JSON.parse(this.tableColumnData)
         });
     }
@@ -107,9 +121,12 @@ export default {
     ...mapFields({
       headerBackgroundColor: "component.compConfigData.headerBackgroundColor",
       headerColor: "component.compConfigData.headerColor",
+      bodyBackgroundColor: "component.compConfigData.bodyBackgroundColor",
+      bodyColor: "component.compConfigData.bodyColor",
       customJsCode: "component.compConfigData.customJsCode",
-      columns: "component.compConfigData.tableConfig.columns",
-      strip: "component.compConfigData.strip"
+      columns: "component.compConfigData.columns",
+      strip: "component.compConfigData.strip",
+      stripeHoverBackground: "component.compConfigData.stripeHoverBackground"
     })
   }
 };
